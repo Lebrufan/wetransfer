@@ -98,6 +98,23 @@ export const supabaseClient = {
         return data
       },
 
+      async filter(filters = {}) {
+        let query = supabase
+          .from('vehicle_types')
+          .select('*')
+
+        if (filters.active !== undefined) {
+          query = query.eq('active', filters.active)
+        }
+
+        query = query.order('created_at', { ascending: false })
+
+        const { data, error } = await query
+
+        if (error) throw error
+        return data
+      },
+
       async create(vehicleData) {
         const { data, error } = await supabase
           .from('vehicle_types')
