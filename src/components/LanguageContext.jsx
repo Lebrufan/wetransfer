@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import ptBR from './locales/pt-BR.js';
-import en from './locales/en.js';
-import es from './locales/es.js';
+import ptBR from './locales/pt-BR.jsx';
+import en from './locales/en.jsx';
+import es from './locales/es.jsx';
 
 const translations = {
   'pt-BR': ptBR,

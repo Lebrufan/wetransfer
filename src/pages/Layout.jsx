@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, Outlet } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Calendar, LayoutDashboard, MapPin, LogOut, Settings, Car, Lock, Package, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -20,15 +20,17 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { base44 } from '@/api/base44Client';
-import { LanguageProvider, useLanguage } from './components/LanguageContext';
-import LanguageSelector from './components/LanguageSelector';
-import WhatsAppButton from './components/WhatsAppButton';
+import { LanguageProvider, useLanguage } from '@/components/LanguageContext';
+import LanguageSelector from '@/components/LanguageSelector';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
-function LayoutContent({ children, currentPageName }) {
+function LayoutContent() {
   const location = useLocation();
   const [user, setUser] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const { t } = useLanguage();
+
+  const currentPageName = location.pathname.split('/')[1] || 'NovaReserva';
 
   React.useEffect(() => {
     const initializeApp = async () => {
@@ -250,7 +252,7 @@ function LayoutContent({ children, currentPageName }) {
         </header>
 
         <div className="flex-1 overflow-auto">
-          {children}
+          <Outlet />
         </div>
       </main>
 
@@ -290,11 +292,11 @@ function LayoutContent({ children, currentPageName }) {
   );
 }
 
-export default function Layout({ children, currentPageName }) {
+export default function Layout() {
   return (
     <SidebarProvider>
       <LanguageProvider>
-        <LayoutContent children={children} currentPageName={currentPageName} />
+        <LayoutContent />
       </LanguageProvider>
     </SidebarProvider>
   );
